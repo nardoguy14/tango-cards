@@ -7,7 +7,7 @@ const model = defineModel<T>({ required: true });
 <template>
   <div class="modes" role="group" :aria-label="label">
     <button v-for="o in options" :key="o.value" type="button" :aria-pressed="model === o.value" @click="model = o.value">
-      {{ o.label }}<template v-if="o.count !== undefined"> <span class="mono">{{ o.count }}</span></template>
+      {{ o.label }}<span v-if="o.count !== undefined" class="mono count">{{ o.count }}</span>
     </button>
   </div>
 </template>

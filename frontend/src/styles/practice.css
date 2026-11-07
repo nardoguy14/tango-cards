@@ -24,3 +24,4 @@
 .opts-inner > * { margin: 0 14px 14px; opacity: 0; transform: translateY(-6px); transition: opacity .2s, transform .25s; }
 .opts.open .opts-inner > * { opacity: 1; transform: none; transition-delay: .08s; }
 .panel > .opts + .drop { margin-top: 14px; }
+.modes button .count { margin-left: .35em; }

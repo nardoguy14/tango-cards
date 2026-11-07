@@ -24,7 +24,7 @@ function create() {
 </script>
 
 <template>
-  <div class="row" :style="{ marginTop: app.sets.length ? '24px' : '' }">
+  <div class="row">
     <span class="eyebrow">Your sets</span><span class="spacer"></span>
     <span v-if="app.model" class="note">Reading images with <span class="mono">{{ app.model }}</span></span>
   </div>

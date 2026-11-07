@@ -17,3 +17,25 @@
 .newform { display: flex; gap: 8px; margin-top: 18px; }
 .newform input { flex: 1; }
 
+
+/* the menu bar: Find and Practice open as dropdowns over the sets; it stays in reach while scrolling */
+.menubar { position: sticky; top: 0; z-index: 8; margin: -8px -16px 16px; padding: 8px 16px; background: var(--paper); }
+.menu-btns { display: flex; gap: 8px; }
+.menu-btn { position: relative; display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--surface);
+  border-radius: 999px; padding: 8px 16px; font-weight: 500; min-height: 40px; transition: background .2s, color .2s, border-color .2s, transform .12s; }
+.menu-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.menu-btn:hover { border-color: var(--ai); }
+.menu-btn:active { transform: scale(.96); }
+.menu-btn[aria-expanded="true"] { background: var(--ai); border-color: var(--ai); color: var(--surface); }
+.menu-btn .dot { position: absolute; top: 5px; right: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--gram); box-shadow: 0 0 0 2px var(--surface); }
+.menu-sheet { position: absolute; left: 16px; right: 16px; top: calc(100% - 2px); max-height: min(72vh, 640px); overflow-y: auto; overscroll-behavior: contain;
+  border-radius: 14px; box-shadow: 0 2px 6px rgba(28,33,48,.08), 0 18px 48px rgba(28,33,48,.22); transform-origin: top left; }
+.menu-sheet > .panel { border-radius: 14px; }
+.scrim { position: fixed; inset: 0; z-index: 7; background: rgba(20,23,30,.28); }
+
+/* dropdown in and out */
+.drop-enter-active { transition: opacity .22s ease, transform .26s cubic-bezier(.2,.8,.3,1); }
+.drop-leave-active { transition: opacity .15s ease, transform .15s ease-in; }
+.drop-enter-from, .drop-leave-to { opacity: 0; transform: translateY(-8px) scale(.98); }
+.fade-enter-active, .fade-leave-active { transition: opacity .2s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
