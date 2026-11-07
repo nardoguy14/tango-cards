@@ -28,14 +28,23 @@
 .menu-btn:active { transform: scale(.96); }
 .menu-btn[aria-expanded="true"] { background: var(--ai); border-color: var(--ai); color: var(--surface); }
 .menu-btn .dot { position: absolute; top: 5px; right: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--gram); box-shadow: 0 0 0 2px var(--surface); }
-.menu-sheet { position: absolute; left: 16px; right: 16px; top: calc(100% - 2px); max-height: min(72vh, 640px); overflow-y: auto; overscroll-behavior: contain;
-  border-radius: 14px; box-shadow: 0 2px 6px rgba(28,33,48,.08), 0 18px 48px rgba(28,33,48,.22); transform-origin: top left; }
-.menu-sheet > .panel { border-radius: 14px; }
-.scrim { position: fixed; inset: 0; z-index: 7; background: rgba(20,23,30,.28); }
+/* The open dropdown sits clearly above the page: the page behind is dimmed and blurred, the sheet
+   gets an accent edge, a strong outline and a deep shadow, and a pointer ties it to its button. */
+.menu-sheet { position: absolute; left: 16px; right: 16px; top: calc(100% + 6px); max-height: min(72vh, 640px); overflow-y: auto; overscroll-behavior: contain;
+  border-radius: 16px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--ai) 45%, var(--line)); border-top: 4px solid var(--ai);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ai) 12%, transparent), 0 24px 60px rgba(10,14,24,.35), 0 6px 16px rgba(10,14,24,.18);
+  transform-origin: var(--caret-x, 40px) top; }
+.menu-sheet > .panel { border: 0; border-radius: 0; background: transparent; }
+.caret { position: absolute; top: calc(100% - 4px); left: var(--caret-x, 40px); width: 16px; height: 16px; margin-left: -8px;
+  background: var(--ai); transform: rotate(45deg); border-radius: 3px 0 0 0; transition: left .25s cubic-bezier(.2,.8,.3,1); }
+.menubar.open { box-shadow: 0 1px 0 var(--line); }
+.scrim { position: fixed; inset: 0; z-index: 7; background: rgba(14,17,26,.48); backdrop-filter: blur(3px) saturate(.8); -webkit-backdrop-filter: blur(3px) saturate(.8); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .scrim { background: rgba(0,0,0,.62); } }
+:root[data-theme="dark"] .scrim { background: rgba(0,0,0,.62); }
 
 /* dropdown in and out */
 .drop-enter-active { transition: opacity .22s ease, transform .26s cubic-bezier(.2,.8,.3,1); }
 .drop-leave-active { transition: opacity .15s ease, transform .15s ease-in; }
-.drop-enter-from, .drop-leave-to { opacity: 0; transform: translateY(-8px) scale(.98); }
+.drop-enter-from, .drop-leave-to { opacity: 0; transform: translateY(-10px) scale(.97); }
 .fade-enter-active, .fade-leave-active { transition: opacity .2s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
