@@ -15,7 +15,9 @@ either side with a card you flip and swipe.
 - **Practice across sets.** Random cards from any sets you choose, words, grammar or both.
 - **Find cards.** Ask for a topic ("days of the week", "food and drinks", "particles for
   places") and a language model picks the matching cards from every set. Refine it ("only the
-  verbs"), untick anything you don't want, then practice exactly those.
+  verbs"), untick anything you don't want, then practice exactly those. With no model running
+  it does a word search instead: type a word in English or Japanese (week, ねこ, 学校) and it
+  finds the cards that contain it.
 - Photos stay with their set, and every card links back to the photo it came from.
 - Works on phones: swipe right for "got it", left for "again".
 
@@ -63,8 +65,10 @@ Photo reading works with any vision model LiteLLM supports:
 | Anthropic | `anthropic/claude-sonnet-5-5`  | `ANTHROPIC_API_KEY` |
 | Ollama    | `ollama_chat/qwen2.5vl`        | `OLLAMA_API_BASE`   |
 
-**Find cards** needs a chat model that can return JSON. Without one, everything else works
-and the finder says its model isn't running. A local model with vLLM:
+**Find cards** works best with a chat model that can return JSON. Without one it falls back
+to a word search (`app/search.py`): it matches what you type against each card's Japanese
+(katakana and hiragana count as the same), reading and English, and the words *grammar*,
+*verbs* and *words* narrow the results. A local model with vLLM:
 
 ```bash
 vllm serve nvidia/Qwen3.8-27B-NVFP4 --served-model-name qwen3.8-27b --port 9200 --max-model-len 65536
@@ -102,6 +106,7 @@ app/                        backend
   schemas.py                request bodies
   agent.py                  reads photos: Google ADK agent + LiteLLM model -> cards (word or grammar)
   finder.py                 asks an OpenAI-compatible model which cards match a request
+  search.py                 the word search Find cards uses when no model is running
   db.py                     SQLite for sets and photo records; photo files on disk
   web/                      the built page (generated: don't edit)
 
@@ -146,7 +151,7 @@ Set `API_TARGET=http://127.0.0.1:8090` before `npm run dev` if your server runs 
 | GET | `/api/sets/{id}/images` | photos saved for a set |
 | GET / DELETE | `/api/images/{id}` | a photo file / remove it |
 | POST | `/api/extract` | multipart `set_id`, `files` (≤12 images, ≤10 MB each), optional `instructions` and `image_ids` → `{cards, images, errors}` |
-| POST | `/api/find` | `{turns: [{role, text, ids?}], set_ids?}` → `{reply, cards}` |
+| POST | `/api/find` | `{turns: [{role, text, ids?}], set_ids?}` → `{reply, cards, mode: "ai" or "simple"}` |
 
 `/api/extract` saves every photo to the set first, then reads them (4 at a time), so a photo
 that fails to read is still kept. The page shrinks photos to 2000 px on the long side before

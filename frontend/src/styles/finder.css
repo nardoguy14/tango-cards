@@ -25,3 +25,5 @@
 .found button[aria-pressed="false"] .tick { background: transparent; color: transparent; }
 .found button[aria-pressed="false"] .jp { text-decoration: line-through; }
 
+.bubble .how { display: block; width: fit-content; margin-bottom: 3px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em;
+  text-transform: uppercase; padding: 1px 6px; border-radius: 4px; background: var(--surface); color: var(--muted); }

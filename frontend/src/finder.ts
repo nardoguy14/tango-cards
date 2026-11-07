@@ -1,5 +1,6 @@
 // "Find cards": a short conversation with a language model about which cards to study.
 // Each answer replaces the results; follow-ups ("only the verbs") build on the last answer.
+// With no model running, the server answers with a simple word search instead (mode "simple").
 import { reactive } from "vue";
 import { api } from "./api";
 import { ofKind } from "./lib/cards";
@@ -23,7 +24,7 @@ export async function ask(text: string) {
   finder.draft = ""; finder.busy = true; finder.error = "";
   try {
     const out = await api.find(finder.turns);
-    finder.turns.push({ role: "assistant", text: out.reply, ids: out.cards.map(c => c.id) });
+    finder.turns.push({ role: "assistant", text: out.reply, ids: out.cards.map(c => c.id), mode: out.mode });
     finder.results = out.cards; finder.off = []; finder.kind = "all";
   } catch (e) {
     finder.turns.pop(); finder.draft = text; // nothing came back: let them resend it

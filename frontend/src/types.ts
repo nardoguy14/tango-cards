@@ -70,4 +70,8 @@ export interface Turn {
   role: "user" | "assistant";
   text: string;
   ids: string[];
+  /** How an answer was found: by the AI model, or by the simple word search (no model running). */
+  mode?: FindMode;
 }
+
+export type FindMode = "ai" | "simple";

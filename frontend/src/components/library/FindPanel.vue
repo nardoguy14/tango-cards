@@ -7,7 +7,6 @@ import { FILTERS } from "../../prefs";
 import { app } from "../../store";
 import Segmented from "../ui/Segmented.vue";
 
-const down = computed(() => !app.helperUp && !finder.turns.length);
 const shown = computed(() => ofKind(finder.results, finder.kind));
 const keptCount = computed(() => kept().length);
 const kindOptions = computed(() => FILTERS.map(k => ({ value: k, label: FILTER_LABEL[k], count: ofKind(finder.results, k).length })));
@@ -31,7 +30,9 @@ function submit() {
     <div v-if="finder.turns.length" class="convo" aria-live="polite">
       <template v-for="(t, i) in finder.turns" :key="i">
         <div v-if="t.role === 'user'" class="bubble me reveal">{{ t.text }}</div>
-        <div v-else class="bubble bot reveal">{{ t.text || "Here they are." }}<span class="n">{{ count(t.ids.length, "card") }}</span></div>
+        <div v-else class="bubble bot reveal">
+          <span v-if="t.mode === 'simple'" class="how">word search</span>{{ t.text || "Here they are." }}<span class="n">{{ count(t.ids.length, "card") }}</span>
+        </div>
       </template>
       <div v-if="finder.busy" class="bubble bot wait reveal">Looking through your cards <i></i><i></i><i></i></div>
     </div>
@@ -58,12 +59,15 @@ function submit() {
 
     <form class="ask" @submit.prevent="submit">
       <input v-model="finder.draft" maxlength="500" autocomplete="off" aria-label="What cards do you want?"
-        :placeholder="finder.results.length ? 'Refine: only verbs, add the months…' : 'e.g. cards about days of the week'"
-        :disabled="finder.busy || down">
-      <button class="btn primary" type="submit" :disabled="finder.busy || down">Ask</button>
+        :placeholder="app.helperUp
+          ? (finder.results.length ? 'Refine: only verbs, add the months…' : 'e.g. cards about days of the week')
+          : 'A word in English or Japanese: week, ねこ, 学校…'"
+        :disabled="finder.busy">
+      <button class="btn primary" type="submit" :disabled="finder.busy">{{ app.helperUp ? "Ask" : "Search" }}</button>
     </form>
-    <p v-if="down" class="note" style="margin:0">
-      The local model (<span class="mono">{{ app.helper || "qwen" }}</span>) isn't running, so the finder is off. Practice below still works.
+    <p v-if="!app.helperUp" class="note" style="margin:0">
+      Word search: finds cards whose Japanese, reading or English contains what you type. Add <i>grammar</i>, <i>verbs</i> or
+      <i>words</i> to narrow it. Start the AI model (<span class="mono">{{ app.helper || "qwen" }}</span>) to ask by topic instead.
     </p>
   </section>
 </template>

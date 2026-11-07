@@ -1,5 +1,5 @@
 // The Tango Cards API. Every call throws an Error carrying the server's own message.
-import type { Card, CardSet, ExtractResult, FoundCard, Health, Photo, Turn } from "./types";
+import type { Card, CardSet, ExtractResult, FindMode, FoundCard, Health, Photo, Turn } from "./types";
 
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   const isForm = body instanceof FormData;
@@ -36,5 +36,5 @@ export const api = {
   photoUrl: (photoId: string) => `/api/images/${id(photoId)}`,
 
   extract: (form: FormData) => request<ExtractResult>("POST", "/api/extract", form),
-  find: (turns: Turn[]) => request<{ reply: string; cards: FoundCard[] }>("POST", "/api/find", { turns }),
+  find: (turns: Turn[]) => request<{ reply: string; cards: FoundCard[]; mode: FindMode }>("POST", "/api/find", { turns }),
 };
