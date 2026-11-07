@@ -21,6 +21,37 @@ either side with a card you flip and swipe.
 - Photos stay with their set, and every card links back to the photo it came from.
 - Works on phones: swipe right for "got it", left for "again".
 
+## What you need
+
+| | What | Why |
+|---|---|---|
+| **Required** | [uv](https://docs.astral.sh/uv/) | Runs the app. It downloads Python (3.11 or newer) and every package by itself on the first start. |
+| **Required** for photos | A **Gemini API key** (free to start) | **Gemini 2.5 Flash** reads your photos and turns them into cards. It reads the Japanese and the furigana, writes the English, and labels each card a word or a grammar rule. |
+| Optional | An AI chat model for **Find cards** | Lets you ask for cards by topic ("food and drinks"). Without one, Find cards does a plain word search. See [Find cards](#find-cards) below. |
+| Optional | [Node.js](https://nodejs.org/) 20.19+ or 22.12+ | Only to change the page's code. The built page is already in the repo. |
+
+### Getting a Gemini API key
+
+1. Go to [Google AI Studio → API keys](https://aistudio.google.com/apikey) and sign in with a
+   Google account.
+2. Click **Create API key**. If it asks, pick or create a Google Cloud project; the default is fine.
+3. Copy the key (it starts with `AIza`) and paste it into `.env` after `GEMINI_API_KEY=`.
+   The start script creates `.env` for you on its first run. See [Run it](#run-it).
+
+Things to know:
+
+- **Cost:** Gemini has a free tier, and reading a page of notes uses very little of it. Heavy
+  use, or a project with billing turned on, can cost money. Check Google's
+  [pricing page](https://ai.google.dev/gemini-api/docs/pricing).
+- **Privacy:** on the free tier, Google may use what you send (your photos) to improve its
+  products. Turn on billing for the project if that matters to you.
+- **Keep the key private.** `.env` is in `.gitignore`, so it is never committed. Don't paste
+  the key anywhere else.
+- **Without a key** the app still runs. You can study, type cards in by hand, and search them;
+  only *Make cards* from a photo fails, with a message that the key is missing.
+- **Another provider** works too (OpenAI, Anthropic, or a local Ollama model). Change `MODEL`
+  and set that provider's key. See [Settings](#settings-env).
+
 ## Run it
 
 The only thing to install is [uv](https://docs.astral.sh/uv/). It fetches the right Python
@@ -64,6 +95,8 @@ Photo reading works with any vision model LiteLLM supports:
 | OpenAI    | `openai/gpt-4.1-mini`          | `OPENAI_API_KEY`    |
 | Anthropic | `anthropic/claude-sonnet-5-5`  | `ANTHROPIC_API_KEY` |
 | Ollama    | `ollama_chat/qwen2.5vl`        | `OLLAMA_API_BASE`   |
+
+### Find cards
 
 **Find cards** works best with a chat model that can return JSON. Without one it falls back
 to a word search (`app/search.py`): it matches what you type against each card's Japanese
