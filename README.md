@@ -21,6 +21,31 @@ either side with a card you flip and swipe.
 - Photos stay with their set, and every card links back to the photo it came from.
 - Works on phones: swipe right for "got it", left for "again".
 
+## See it
+
+<p align="center">
+  <img src="docs/media/demo.gif" width="300" alt="Demo: opening a set, flipping and swiping cards, making cards from a photo of notes, finding cards, and practicing grammar across sets">
+  <br>
+  <sub>A one-minute tour, sped up. <a href="docs/media/demo.mp4">Watch it full speed (MP4)</a>.</sub>
+</p>
+
+The tour opens a set and studies it: flip, swipe right for "got it", swipe left for "again".
+It then makes cards from [a page of notes](docs/media/sample-notes.jpg): Gemini reads all
+eight items and labels the two patterns (〜が好きです, 〜がきらいです) as grammar on its own.
+Last, it finds the days of the week across sets and practices only grammar.
+
+| Your sets | A set | Studying |
+|:---:|:---:|:---:|
+| <img src="docs/media/home.png" width="240" alt="Home: the menu bar and three sets with word and grammar counts"> | <img src="docs/media/set.png" width="240" alt="A set: practice buttons and its cards, split into grammar and words"> | <img src="docs/media/card.png" width="240" alt="A flipped card: water, 水 (みず)"> |
+| **Swipe to answer** | **Add cards from a photo** | **Check what it found** |
+| <img src="docs/media/swipe.png" width="240" alt="A card mid-swipe with a Got it stamp"> | <img src="docs/media/add-photo.png" width="240" alt="The add-cards screen with a photo of notes ready"> | <img src="docs/media/review.png" width="240" alt="Found 8 cards: each one editable and marked word or grammar"> |
+| **Words and grammar** | **Find cards** | **Practice across sets** |
+| <img src="docs/media/grammar.png" width="240" alt="The new grammar cards in their own group"> | <img src="docs/media/find.png" width="240" alt="Find cards: days of the week found across sets"> | <img src="docs/media/practice.png" width="240" alt="Practice across sets, with grammar chosen"> |
+| **Dark mode** | | |
+| <img src="docs/media/dark-home.png" width="240" alt="The home screen in dark mode"> | <img src="docs/media/dark-card.png" width="240" alt="A flipped card in dark mode"> | |
+
+<sub>Screenshots use a sample library. Find cards is shown doing its word search (no AI model running).</sub>
+
 ## What you need
 
 | | What | Why |

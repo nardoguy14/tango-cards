@@ -1,2 +1,4 @@
 # Built by `npm run build` in frontend/. Committed so the app runs with only uv installed.
 app/web/** linguist-generated=true -diff
+# README screenshots and demo video
+docs/media/** -diff
