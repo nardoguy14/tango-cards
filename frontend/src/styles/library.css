@@ -33,7 +33,7 @@
 .menu-sheet { position: absolute; left: 16px; right: 16px; top: calc(100% + 6px); max-height: min(72vh, 640px); overflow-y: auto; overscroll-behavior: contain;
   border-radius: 16px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--ai) 45%, var(--line)); border-top: 4px solid var(--ai);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--ai) 12%, transparent), 0 24px 60px rgba(10,14,24,.35), 0 6px 16px rgba(10,14,24,.18);
-  transform-origin: var(--caret-x, 40px) top; }
+}
 .menu-sheet > .panel { border: 0; border-radius: 0; background: transparent; }
 .caret { position: absolute; top: calc(100% - 4px); left: var(--caret-x, 40px); width: 16px; height: 16px; margin-left: -8px;
   background: var(--ai); transform: rotate(45deg); border-radius: 3px 0 0 0; transition: left .25s cubic-bezier(.2,.8,.3,1); }
@@ -45,6 +45,6 @@
 /* dropdown in and out */
 .drop-enter-active { transition: opacity .22s ease, transform .26s cubic-bezier(.2,.8,.3,1); }
 .drop-leave-active { transition: opacity .15s ease, transform .15s ease-in; }
-.drop-enter-from, .drop-leave-to { opacity: 0; transform: translateY(-10px) scale(.97); }
+.drop-enter-from, .drop-leave-to { opacity: 0; transform: translateY(-6px); }   /* a slide, no zoom */
 .fade-enter-active, .fade-leave-active { transition: opacity .2s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }

@@ -1,25 +1,21 @@
 <!-- Find cards: ask for a topic, refine it, leave out what you don't want, practice the rest. -->
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
+import { computed } from "vue";
 import { ask, clear, finder, kept, practiceFound, toggle } from "../../finder";
 import { count, FILTER_LABEL, kindOf, ofKind } from "../../lib/cards";
 import { FILTERS } from "../../prefs";
 import { app } from "../../store";
 import Segmented from "../ui/Segmented.vue";
 
-const input = ref<HTMLInputElement>();
 const down = computed(() => !app.helperUp && !finder.turns.length);
 const shown = computed(() => ofKind(finder.results, finder.kind));
 const keptCount = computed(() => kept().length);
 const kindOptions = computed(() => FILTERS.map(k => ({ value: k, label: FILTER_LABEL[k], count: ofKind(finder.results, k).length })));
 const bothKinds = computed(() => kindOptions.value.every(o => o.count));
 
-async function submit() {
+function submit() {
   const text = finder.draft.trim();
-  if (!text || finder.busy) return;
-  await ask(text);
-  await nextTick();
-  input.value?.focus();
+  if (text && !finder.busy) ask(text);
 }
 </script>
 
@@ -61,7 +57,7 @@ async function submit() {
     </div>
 
     <form class="ask" @submit.prevent="submit">
-      <input ref="input" v-model="finder.draft" maxlength="500" autocomplete="off" aria-label="What cards do you want?"
+      <input v-model="finder.draft" maxlength="500" autocomplete="off" aria-label="What cards do you want?"
         :placeholder="finder.results.length ? 'Refine: only verbs, add the months…' : 'e.g. cards about days of the week'"
         :disabled="finder.busy || down">
       <button class="btn primary" type="submit" :disabled="finder.busy || down">Ask</button>

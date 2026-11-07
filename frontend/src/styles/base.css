@@ -27,3 +27,7 @@ header.top h1 { font-family: var(--f-jp); font-size: 30px; font-weight: 700; let
 header.top h1 small { font-family: var(--f-ui); font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 8px; letter-spacing: 0; }
 
 #app > .wrap .panel + .panel, .screen > .panel + .panel { margin-top: 16px; }
+
+/* No double-tap zoom: quick taps on buttons stay taps (pinch zoom still works). Inputs are 16px
+   or more (see input, select above), so iOS doesn't zoom in when one is focused either. */
+html { touch-action: manipulation; -webkit-text-size-adjust: 100%; }

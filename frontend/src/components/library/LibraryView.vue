@@ -1,6 +1,6 @@
 <!-- Home: your sets, with Find cards and Practice across sets as dropdowns from the menu bar. -->
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { finder } from "../../finder";
 import { app } from "../../store";
 import FindPanel from "./FindPanel.vue";
@@ -9,16 +9,12 @@ import SetGrid from "./SetGrid.vue";
 
 type Menu = "find" | "practice";
 const open = ref<Menu | null>(null);
-const sheet = ref<HTMLElement>();
 const caretX = ref(40); // the pointer sits under the button that opened the sheet
 
-async function toggle(menu: Menu, e: MouseEvent) {
+function toggle(menu: Menu, e: MouseEvent) {
   const btn = e.currentTarget as HTMLElement;
   caretX.value = btn.offsetLeft + btn.offsetWidth / 2;
   open.value = open.value === menu ? null : menu;
-  await nextTick();
-  // a keyboard user lands in the panel; on phones, don't pop the on-screen keyboard uninvited
-  if (open.value && matchMedia("(pointer: fine)").matches) sheet.value?.querySelector<HTMLElement>("input, button")?.focus();
 }
 const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") open.value = null; };
 onMounted(() => addEventListener("keydown", onKey));
@@ -40,7 +36,7 @@ onUnmounted(() => removeEventListener("keydown", onKey));
       </div>
       <Transition name="fade"><span v-if="open" class="caret" aria-hidden="true"></span></Transition>
       <Transition name="drop">
-        <div v-if="open" id="menu-sheet" ref="sheet" class="menu-sheet" role="dialog"
+        <div v-if="open" id="menu-sheet" class="menu-sheet" role="dialog"
           :aria-label="open === 'find' ? 'Find cards' : 'Practice across sets'">
           <FindPanel v-if="open === 'find'" />
           <MixPanel v-else />
