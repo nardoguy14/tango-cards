@@ -1,0 +1,37 @@
+/* Motion. Vue only creates an element when it first appears, so an animation on an element
+   plays once when it arrives and not on later updates. --i staggers lists. */
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+@keyframes settle { from { opacity: 0; transform: translateX(-10px); background: var(--gram-soft); } }
+@keyframes deal { from { opacity: 0; transform: translateX(28px) rotate(1.5deg) scale(.97); } }
+@keyframes pop { from { opacity: 0; transform: scale(.94); } }
+@keyframes fab-in { from { opacity: 0; transform: scale(.4) rotate(-90deg); } }
+
+/* screen changes: the old screen fades up and out while the new one rises in */
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+::view-transition-old(root) { animation: vt-out .16s ease-in both; }
+::view-transition-new(root) { animation: vt-in .3s cubic-bezier(.2,.7,.3,1) .06s both; }
+::view-transition-group(fab) { animation-duration: .35s; }
+@supports not (view-transition-name: none) {
+  .screen { animation: rise .28s cubic-bezier(.2,.7,.3,1); }
+}
+
+/* arrivals: panels, set tiles, card rows, found cards, cards read from a photo */
+.screen > .panel, .screen > .stack > .panel, .set, tbody tr, .pcard, .found li {
+  animation: rise .36s cubic-bezier(.2,.7,.3,1) both;
+  animation-delay: calc(min(var(--i, 0), 12) * 35ms + 40ms);
+}
+.set { animation-delay: calc(var(--i, 0) * 50ms + 100ms); }
+tr.moved td { animation: settle .45s ease-out; }
+.reveal { animation: rise .22s ease-out; }
+.scene .swipe { animation: deal .32s cubic-bezier(.2,.8,.3,1) backwards; } /* not `both`: a held transform would fight the drag */
+.done { animation: pop .35s cubic-bezier(.2,.9,.3,1.2) both; }
+.fab { animation: fab-in .4s cubic-bezier(.2,.9,.3,1.3) .2s both; }
+
+.btn, .chip, .modes button, .kind, .kindseg button { transition: transform .12s ease, background .2s, color .2s, border-color .2s; }
+.btn:active:not(:disabled), .modes button:active, .kind:active { transform: scale(.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+}

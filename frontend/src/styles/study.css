@@ -1,0 +1,72 @@
+/* Studying: the flip card, swipe stamps, piles and grading. */
+/* study */
+.modes { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+.modes button { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font-size: 14px; color: var(--muted); }
+.modes button[aria-pressed="true"] { background: var(--ai); color: var(--surface); }
+.progress { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.progress > i { display: block; height: 100%; background: var(--ai); width: 0; transition: width .3s ease; }
+/* Smart learn: three piles, shown as one segmented bar (cleared | learning | new) */
+.piles { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.piles b { font-family: var(--f-mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+.piles .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
+.dot.cleared { background: var(--ai); }
+.dot.learning { background: var(--ai); opacity: .35; }
+.dot.new { background: var(--line); }
+.progress.split { display: flex; }
+.progress.split > i { flex: none; }
+.progress.split > i.learning { background: var(--ai); opacity: .35; }
+.studybar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.studybar select { padding: 6px 8px; border-radius: 999px; }
+.learnnote { font-size: 13px; color: var(--muted); }
+.linkbtn.inline { font-size: 13px; }
+
+.scene { perspective: 1400px; width: 100%; max-width: 520px; margin: 8px auto 0; aspect-ratio: 5 / 3.2; }
+.card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .6s cubic-bezier(.3,.7,.2,1); cursor: pointer; }
+.card:focus-visible { outline: 2px solid var(--ai); outline-offset: 4px; border-radius: 14px; }
+.card.flipped { transform: rotateY(180deg); }
+/* swipe layer: moves the whole card; the flip stays on .card inside it */
+.swipe { position: relative; width: 100%; height: 100%; touch-action: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; will-change: transform; }
+.swipe.back { transition: transform .3s cubic-bezier(.3,1.4,.5,1); }
+.swipe.fly { transition: transform .28s ease-in, opacity .28s ease-in; opacity: 0; }
+.stamp { position: absolute; top: 22px; z-index: 2; padding: 2px 12px; border: 3px solid currentColor; border-radius: 8px; background: var(--surface); font-weight: 700; font-size: 20px; letter-spacing: .04em; opacity: 0; pointer-events: none; }
+.stamp.good { left: 22px; color: var(--good); transform: rotate(-12deg); }
+.stamp.again { right: 22px; color: var(--again); transform: rotate(12deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 32px; box-shadow: var(--shadow); text-align: center; overflow: hidden; }
+.face.front { background: var(--surface); border: 1px solid var(--line); }
+.face.back { background: var(--card-back); color: var(--card-back-ink); transform: rotateY(180deg); }
+.face .hole { position: absolute; left: 18px; top: 18px; width: 18px; height: 18px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+.face .side { position: absolute; right: 18px; top: 16px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .6; }
+.face .hint { position: absolute; bottom: 14px; font-size: 12px; opacity: .55; }
+.face .big-jp { font-family: var(--f-jp); font-weight: 700; font-size: clamp(30px, 8vw, 54px); line-height: 1.2; overflow-wrap: anywhere; }
+.face .big-en { font-weight: 500; font-size: clamp(22px, 5.4vw, 34px); line-height: 1.3; overflow-wrap: anywhere; }
+.face .reading { font-family: var(--f-jp); font-size: 18px; opacity: .7; margin-top: 6px; }
+.face .sub { font-size: 16px; opacity: .75; margin-top: 10px; }
+/* grammar cards carry a sentence or two on the English side */
+.face .big-en.long { font-size: 18px; line-height: 1.45; }
+.face .big-en.xlong { font-size: 15px; line-height: 1.45; }
+.face .sub.long, .face .sub.xlong { font-size: 14px; line-height: 1.45; }
+.scene.tall { aspect-ratio: 5 / 4.4; }
+.instr { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.instr label { font-weight: 500; }
+.instr .hint { font-size: 13px; color: var(--muted); }
+textarea { font: inherit; font-size: max(16px, 1em); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; resize: vertical; min-height: 64px; }
+td textarea { min-height: 0; padding: 6px 8px; }
+.face .sub.jp { font-family: var(--f-jp); }
+
+.grade { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+.grade .btn { min-width: 140px; }
+.grade .again { color: var(--again); border-color: var(--again); background: transparent; }
+.grade .good { color: var(--good); border-color: var(--good); background: transparent; }
+.grade .again:hover { background: var(--again); color: var(--surface); }
+.grade .good:hover { background: var(--good); color: var(--surface); }
+.keys { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; }
+kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--surface); }
+.done { text-align: center; padding: 40px 16px; }
+.done .score { font-family: var(--f-jp); font-size: 54px; font-weight: 700; color: var(--ai); }
+.note { font-size: 13px; color: var(--muted); }
+
+
+@media (max-width: 480px) {
+  .grade .btn { min-width: 0; flex: 1; }
+  .face { padding: 24px 20px; }
+}

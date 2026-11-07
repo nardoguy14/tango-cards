@@ -15,3 +15,6 @@ data/
 .DS_Store
 .idea/
 .vscode/
+
+# Front end: dependencies are installed by npm; the build in app/web IS committed
+frontend/node_modules/

@@ -1,0 +1,26 @@
+/* Practice settings and the Options disclosure. */
+/* practice across sets */
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--muted); transition: background .2s, color .2s, border-color .2s, transform .15s; }
+.chip[aria-pressed="true"] { background: var(--ai-soft); border-color: var(--ai); color: var(--ink); }
+.chip:active { transform: scale(.96); }
+.mixgrid { display: grid; grid-template-columns: auto 1fr; gap: 10px 12px; align-items: center; }
+.mixgrid > .learnnote { white-space: nowrap; }
+@media (max-width: 480px) { .mixgrid { grid-template-columns: 1fr; gap: 4px; } .mixgrid > .learnnote { margin-top: 6px; } }
+
+/* options disclosure: one row with a summary; the settings fold open below it */
+.opts { border: 1px solid var(--line); border-radius: 12px; background: var(--paper); transition: border-color .2s; }
+.opts.open { border-color: color-mix(in srgb, var(--ai) 35%, var(--line)); }
+.opts-head { width: 100%; display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 10px 14px; text-align: left; border-radius: 12px; min-height: 44px; }
+.opts-head:hover .opts-label { color: var(--ai); }
+.opts-label { font-weight: 500; font-size: 14px; flex: none; transition: color .2s; }
+.opts-sum { flex: 1; min-width: 0; font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: opacity .2s; }
+.opts.open .opts-sum { opacity: 0; }
+.chev { flex: none; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: translateY(-2px) rotate(45deg); transition: transform .3s cubic-bezier(.2,.7,.3,1); }
+.opts.open .chev { transform: translateY(2px) rotate(225deg); }
+.opts-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s cubic-bezier(.2,.7,.3,1); }
+.opts.open .opts-body { grid-template-rows: 1fr; }
+.opts-inner { min-height: 0; overflow: hidden; }
+.opts-inner > * { margin: 0 14px 14px; opacity: 0; transform: translateY(-6px); transition: opacity .2s, transform .25s; }
+.opts.open .opts-inner > * { opacity: 1; transform: none; transition-delay: .08s; }
+.panel > .opts + .drop { margin-top: 14px; }

@@ -1,0 +1,27 @@
+/* Find cards: the conversation and the cards it picked. */
+/* card finder: a short conversation with the local model, then the cards it picked */
+.convo { display: flex; flex-direction: column; gap: 8px; }
+.bubble { max-width: 88%; padding: 8px 12px; border-radius: 14px; font-size: 14px; line-height: 1.45; overflow-wrap: anywhere; }
+.bubble.me { align-self: flex-end; background: var(--ai); color: var(--surface); border-bottom-right-radius: 4px; }
+.bubble.bot { align-self: flex-start; background: var(--ai-soft); border-bottom-left-radius: 4px; }
+.bubble.bot .n { font-family: var(--f-mono); font-size: 12px; opacity: .7; margin-left: 4px; }
+.bubble.wait { color: var(--muted); }
+.bubble.wait i { display: inline-block; width: 5px; height: 5px; margin: 0 1px; border-radius: 50%; background: currentColor; animation: blink 1.2s infinite both; }
+.bubble.wait i:nth-child(2) { animation-delay: .2s; } .bubble.wait i:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.ask { display: flex; gap: 8px; }
+.ask input { flex: 1; }
+.found { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-height: 420px; overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; }
+.found li + li { border-top: 1px solid var(--line); }
+.found button { width: 100%; text-align: left; border: 0; background: none; padding: 8px 12px; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: baseline; transition: opacity .2s, background .2s; }
+.found button:hover { background: var(--ai-soft); }
+.found .tick { grid-row: span 2; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--ai); background: var(--ai); color: var(--surface); font-size: 12px; line-height: 15px; text-align: center; align-self: center; transition: background .2s; }
+.found .jp { font-family: var(--f-jp); font-size: 17px; }
+.found .jp small { font-size: 13px; color: var(--muted); margin-left: 6px; }
+.found .en { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.found .meta { display: inline-block; font-size: 11px; font-family: var(--f-mono); color: var(--muted); margin-left: 6px; }
+.found .meta.g { color: var(--gram); }
+.found button[aria-pressed="false"] { opacity: .45; }
+.found button[aria-pressed="false"] .tick { background: transparent; color: transparent; }
+.found button[aria-pressed="false"] .jp { text-decoration: line-through; }
+

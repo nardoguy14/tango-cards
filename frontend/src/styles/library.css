@@ -1,0 +1,19 @@
+/* Home screen: sets as ring-bound card stacks. */
+/* library: sets as ring-bound card stacks */
+.sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 22px 18px; margin-top: 16px; }
+.set { position: relative; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 18px 16px 44px; min-height: 130px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow); transition: transform .15s ease; }
+.set::before, .set::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); z-index: -1; }
+.set::before { transform: translate(4px, 4px); }
+.set::after { transform: translate(8px, 8px); z-index: -2; }
+.set:hover { transform: translateY(-2px); }
+.set .ring { position: absolute; left: 14px; top: 16px; width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--muted); background: var(--paper); }
+.set h3 { font-size: 18px; font-weight: 700; }
+.set .count { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.set .peek { font-family: var(--f-jp); font-size: 15px; color: var(--muted); margin-top: auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.set .tag { position: absolute; right: 12px; top: 12px; font-size: 11px; font-family: var(--f-mono); color: var(--ai); background: var(--ai-soft); border-radius: 4px; padding: 1px 6px; }
+.set.new { border-style: dashed; box-shadow: none; align-items: center; justify-content: center; padding: 18px; color: var(--muted); font-weight: 500; }
+.set.new::before, .set.new::after { display: none; }
+.setTitle { font-size: 22px; font-weight: 700; flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.newform { display: flex; gap: 8px; margin-top: 18px; }
+.newform input { flex: 1; }
+

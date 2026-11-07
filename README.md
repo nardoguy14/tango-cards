@@ -86,17 +86,53 @@ tunnel link (ngrok, Cloudflare) only with people you trust.
 
 ## How it fits together
 
+The backend is FastAPI (Python). The page is a Vue 3 + TypeScript app built with Vite. The
+built page is committed in `app/web/`, so running the app only needs uv. You need Node only
+to change the front end.
+
 ```
-app/
-  main.py       FastAPI: the JSON API, and serves the page
-  agent.py      reads photos: Google ADK agent + LiteLLM model -> cards (word or grammar)
-  helper.py     Find cards: asks an OpenAI-compatible model which cards match a request
-  db.py         SQLite for sets and photo records; photo files on disk
-  static/
-    index.html  the page shell
-    app.css     styles (light and dark)
-    app.js      the whole front end (vanilla JS, no build step)
+app/                        backend
+  main.py                   creates the app, wires the routes, serves the built page
+  routes/
+    sets.py                 sets, their cards, study progress
+    photos.py               the photos each set was made from
+    extract.py              photos -> cards (saves the photos, then the vision model reads them)
+    find.py                 Find cards
+  schemas.py                request bodies
+  agent.py                  reads photos: Google ADK agent + LiteLLM model -> cards (word or grammar)
+  finder.py                 asks an OpenAI-compatible model which cards match a request
+  db.py                     SQLite for sets and photo records; photo files on disk
+  web/                      the built page (generated: don't edit)
+
+frontend/                   the page's source
+  src/
+    main.ts, App.vue        start-up, and which screen is showing
+    store.ts                sets, screens and navigation (the phone's back button works), saving
+    study.ts                study rounds: Review all, Smart learn, practice across sets
+    finder.ts               the Find cards conversation
+    prefs.ts                choices remembered on this device
+    api.ts, types.ts        the API and its shapes
+    lib/                    cards, progress and photo helpers
+    composables/useSwipe.ts swiping a flashcard
+    components/
+      library/              home: Find cards, Practice across sets, your sets
+      set/                  one set: practice, its cards, its photos, the round + button
+      add/                  the add-cards screen: from photos, review what was found, type one in
+      study/                the flashcard, its faces, the end of a round
+      ui/                   the Options drawer and segmented buttons
+    styles/                 tokens (colours, light and dark), then one file per area, and motion
 ```
+
+### Changing the front end
+
+```bash
+cd frontend
+npm install
+npm run dev      # http://localhost:5173, live reload; /api goes to the server on :8000
+npm run build    # type-checks, then writes app/web/ (commit it)
+```
+
+Set `API_TARGET=http://127.0.0.1:8090` before `npm run dev` if your server runs on another port.
 
 | Method | Path | Body / result |
 |---|---|---|
