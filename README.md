@@ -27,7 +27,8 @@ and every package on the first start.
 1. Install uv:
    - **macOS / Linux:** `curl -LsSf https://astral.sh/uv/install.sh | sh`
    - **Windows (PowerShell):** `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
-2. Get the code: `git clone <this repo>`, or download it as a ZIP and unzip it.
+2. Get the code: `git clone https://github.com/nardoguy14/tango-cards.git`, or download it as a ZIP
+   from the repo page (Code → Download ZIP) and unzip it.
 3. Run the start script in the folder: `./start.sh` on macOS/Linux, or double-click
    `start.bat` on Windows. The first run creates `.env` and stops. Open `.env`, paste your
    Gemini API key after `GEMINI_API_KEY=`, save, and run the start script again.
