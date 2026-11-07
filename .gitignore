@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets: copy .env.example to .env and fill it in
+.env
+
+# Your sets, study progress and photos stay on your machine
+data/
+*.db
+*.db-journal
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

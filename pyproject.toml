@@ -1,0 +1,17 @@
+[project]
+name = "tango-cards"
+version = "0.1.0"
+description = "Japanese–English flashcards made from photos of your notes, with word/grammar cards and an AI card finder"
+requires-python = ">=3.11"
+dependencies = [
+    "google-adk==1.17.0",
+    "litellm==1.83.0",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    "python-dotenv>=1.0",
+    "httpx>=0.27",
+]
+
+[tool.uv]
+package = false
