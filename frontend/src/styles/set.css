@@ -125,3 +125,5 @@ tr.editing td { padding: 10px 0; }
 /* while a card is open for editing, the + steps aside so it can't cover Save/Delete */
 .fab { transition: transform .15s ease, box-shadow .2s, opacity .2s, visibility .2s; }
 .screen:has(.editor) .fab { opacity: 0; visibility: hidden; }
+/* keep the line breaks typed into a card (English notes, example sentences); not in the buttons cell */
+.tablewrap td:not(.acts) { white-space: pre-line; }

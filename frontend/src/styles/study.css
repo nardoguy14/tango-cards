@@ -88,3 +88,5 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .face.back .speak { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); color: var(--card-back-ink); }
 .face.back .speak.playing { background: var(--card-back-ink); color: var(--card-back); }
 td.acts .speak { margin-right: 4px; }
+/* the flashcard keeps a card's line breaks too */
+.face .big-jp, .face .big-en, .face .sub { white-space: pre-line; }
