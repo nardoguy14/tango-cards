@@ -9,6 +9,9 @@ either side with a card you flip and swipe.
 - **Words and grammar.** Every card is either a *word* to memorize or a *grammar* rule
   (particles, conjugations, patterns). New cards are labeled automatically, and one tap moves
   a card to the other group.
+- **Fix anything.** Cards read from a photo are editable before you add them. Afterwards, ✎ on
+  any card in a set (or in the "Added just now" list) edits its Japanese, reading, English or
+  type in place, and deletes it.
 - **Two ways to study a set.** *Smart learn* keeps a small rotation of cards until each one is
   cleared. *Review all* is one pass through the set. Both pick up where you stopped, and can
   be limited to words or grammar.

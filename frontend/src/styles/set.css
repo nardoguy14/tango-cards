@@ -102,3 +102,26 @@ button.kind:hover { border-color: var(--gram); }
 .pick .badge { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: var(--ai); color: var(--surface); font-size: 13px; display: grid; place-items: center; transform: scale(0); transition: transform .2s cubic-bezier(.2,.9,.3,1.4); }
 .pick[aria-pressed="true"] .badge { transform: scale(1); }
 .bigbar { padding: 6px 0 max(10px, env(safe-area-inset-bottom)); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* ✎ edit a saved card, right in the list */
+.x.edit svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+.x.edit:hover { color: var(--ai); }
+tr.editing td { padding: 10px 0; }
+.editor { border: 1px solid color-mix(in srgb, var(--ai) 40%, var(--line)); border-radius: 12px; background: var(--paper); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.editor-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.editor textarea { min-height: 0; }
+.btn.ghost.danger { color: var(--again); }
+
+/* cards added on this visit to the add-cards screen, each one editable */
+.added { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.added-row { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.added-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.added-text .jp { font-family: var(--f-jp); font-size: 17px; }
+.added-text .jp small { font-size: 13px; color: var(--muted); margin-left: 6px; }
+.added-text .meta { font-size: 11px; font-family: var(--f-mono); color: var(--muted); margin-left: 6px; }
+.added-text .meta.g { color: var(--gram); }
+.added-text .en { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.added li { animation: rise .3s cubic-bezier(.2,.7,.3,1) both; }
+/* while a card is open for editing, the + steps aside so it can't cover Save/Delete */
+.fab { transition: transform .15s ease, box-shadow .2s, opacity .2s, visibility .2s; }
+.screen:has(.editor) .fab { opacity: 0; visibility: hidden; }
