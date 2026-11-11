@@ -1,7 +1,8 @@
 <!-- Studying: the card, how far along you are, and the answer buttons. One fixed screen. -->
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { DIR_LABEL } from "../../lib/cards";
+import { speakCard, speech, stopSpeaking } from "../../lib/speech";
 import { prefs } from "../../prefs";
 import { back } from "../../store";
 import { flip, grade, type Round } from "../../study";
@@ -15,19 +16,26 @@ const done = computed(() => props.round.total - props.round.queue.length);
 const pct = (n: number) => `${props.round.total ? (n / props.round.total) * 100 : 0}%`;
 const flashcard = ref<InstanceType<typeof Flashcard>>();
 
+// Read aloud: say the Japanese as soon as it's showing: on a new card when it's asked
+// Japanese-first, or when the card is flipped to its back (which always shows the Japanese).
+watch(() => [props.round.deals, props.round.flipped] as const, ([, flipped]) => {
+  const c = card.value;
+  if (prefs.readAloud && c && (c.side === "jp-en" ? !flipped : flipped)) speakCard(c);
+}, { immediate: true });
+
 // The round stays until another starts; clearing it now would blank this screen mid-transition.
 const leave = () => (props.set.virtual ? back("library", null) : back("set"));
 
 // keys: space flips, arrows answer. While studying, the page itself doesn't scroll.
 function onKey(e: KeyboardEvent) {
-  if ((e.target as HTMLElement).matches?.("input, select, textarea")) return;
+  if ((e.target as HTMLElement).matches?.("input:not([type=checkbox]), select, textarea")) return; // typing, not a tickbox
   if (e.key === " ") { e.preventDefault(); flip(); }
   else if (e.key === "ArrowRight") flashcard.value?.throwCard(true);
   else if (e.key === "ArrowLeft") flashcard.value?.throwCard(false);
 }
 const noScroll = (e: TouchEvent) => e.preventDefault();
 onMounted(() => { addEventListener("keydown", onKey); addEventListener("touchmove", noScroll, { passive: false }); });
-onUnmounted(() => { removeEventListener("keydown", onKey); removeEventListener("touchmove", noScroll); });
+onUnmounted(() => { removeEventListener("keydown", onKey); removeEventListener("touchmove", noScroll); stopSpeaking(); });
 </script>
 
 <template>
@@ -46,7 +54,8 @@ onUnmounted(() => { removeEventListener("keydown", onKey); removeEventListener("
       </span>
       <span v-else class="mono muted">{{ done }} / {{ round.total }}</span>
       <span class="spacer"></span>
-      <label class="note row" style="gap:6px"><input v-model="prefs.showReading" type="checkbox" style="padding:0"> Show reading on front</label>
+      <label class="note row" style="gap:6px"><input v-model="prefs.showReading" type="checkbox" style="padding:0"> Reading on front</label>
+      <label v-if="speech.supported" class="note row" style="gap:6px"><input v-model="prefs.readAloud" type="checkbox" style="padding:0"> Read aloud</label>
     </div>
     <div v-if="round.mode === 'smart'" class="progress split">
       <i :style="{ width: pct(round.cleared.length) }"></i><i class="learning" :style="{ width: pct(round.queue.length) }"></i>

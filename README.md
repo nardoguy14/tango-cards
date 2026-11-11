@@ -18,6 +18,11 @@ either side with a card you flip and swipe.
   verbs"), untick anything you don't want, then practice exactly those. With no model running
   it does a word search instead: type a word in English or Japanese (week, ねこ, 学校) and it
   finds the cards that contain it.
+- **Hear it.** Tap 🔊 on a card, or in a set's card list, to hear the Japanese; tap again
+  right away for slow. Turn on *Read aloud* while studying and each card speaks as its Japanese
+  side appears. It uses your device's own Japanese voice (free, no setup): it says the reading
+  when the card has one, so 家 comes out いえ or うち as written, and the particles は and へ
+  sound like わ and え.
 - Photos stay with their set, and every card links back to the photo it came from.
 - Works on phones: swipe right for "got it", left for "again".
 
@@ -176,7 +181,7 @@ frontend/                   the page's source
     finder.ts               the Find cards conversation
     prefs.ts                choices remembered on this device
     api.ts, types.ts        the API and its shapes
-    lib/                    cards, progress and photo helpers
+    lib/                    cards, progress, photo and speech helpers
     composables/useSwipe.ts swiping a flashcard
     components/
       library/              home: Find cards, Practice across sets, your sets

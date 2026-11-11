@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { api } from "../../api";
 import type { Card, Kind } from "../../types";
+import SpeakButton from "../ui/SpeakButton.vue";
 
 defineProps<{ cards: Card[]; kind: Kind; moved: string | null }>();
 defineEmits<{ move: [card: Card]; remove: [card: Card] }>();
@@ -18,6 +19,7 @@ const other = { grammar: "words", word: "grammar" } as const;
           <td class="rd">{{ c.reading }}</td>
           <td>{{ c.en }}</td>
           <td class="acts">
+            <SpeakButton :card="c" />
             <button class="kind" :class="{ grammar: kind === 'grammar' }" :aria-label="`Move to ${other[kind]}`" :title="`Move to ${other[kind]}`"
               @click="$emit('move', c)">{{ kind }}</button>
             <a v-if="c.image_id" class="src" :href="api.photoUrl(c.image_id)" target="_blank" rel="noopener" title="Open the photo this card came from">

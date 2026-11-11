@@ -4,6 +4,7 @@ import { computed } from "vue";
 import { kindOf } from "../../lib/cards";
 import { prefs } from "../../prefs";
 import type { StudyCard } from "../../types";
+import SpeakButton from "../ui/SpeakButton.vue";
 
 const props = defineProps<{ card: StudyCard; which: "front" | "back" }>();
 const showJp = computed(() => (props.which === "front") === (props.card.side === "jp-en"));
@@ -26,4 +27,5 @@ const len = (t: string) => (t.length > 160 ? "xlong" : t.length > 50 ? "long" : 
   </template>
   <span v-if="which === 'front'" class="hint">Tap to flip</span>
   <span v-if="card.from && which === 'back'" class="fromset">{{ card.from }}</span>
+  <SpeakButton v-if="showJp || which === 'back'" :card="card" />
 </template>

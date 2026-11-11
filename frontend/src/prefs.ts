@@ -10,6 +10,8 @@ const KEY = "tango-prefs";
 export const prefs = reactive({
   dir: "jp-en" as Dir,
   showReading: true,
+  /** Say each card's Japanese aloud as it appears (the browser's voice). */
+  readAloud: false,
   learnSize: 7,
   /** Practice inside a set: all cards, only words, or only grammar. */
   kindFilter: "all" as Filter,
@@ -23,6 +25,7 @@ try {
   const p = JSON.parse(localStorage.getItem(KEY) || "{}");
   if (["jp-en", "en-jp", "mix"].includes(p.dir)) prefs.dir = p.dir;
   if (p.showReading === false) prefs.showReading = false;
+  if (p.readAloud === true) prefs.readAloud = true;
   if (LEARN_SIZES.includes(p.learnSize)) prefs.learnSize = p.learnSize;
   if (FILTERS.includes(p.kindFilter)) prefs.kindFilter = p.kindFilter;
   if (FILTERS.includes(p.mixKind)) prefs.mixKind = p.mixKind;

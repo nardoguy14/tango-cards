@@ -70,3 +70,21 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
   .grade .btn { min-width: 0; flex: 1; }
   .face { padding: 24px 20px; }
 }
+
+/* 🔊 hear the card. On a card face it sits bottom-right; the waves pulse while it plays. */
+.speak { flex: none; display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ai); vertical-align: middle;
+  transition: transform .12s ease, background .2s, color .2s, border-color .2s; }
+.speak svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.speak .body { fill: currentColor; stroke: none; }
+.speak:hover { border-color: var(--ai); }
+.speak:active { transform: scale(.92); }
+.speak.playing { background: var(--ai); border-color: var(--ai); color: var(--surface); }
+.speak.playing .wave { animation: wave 1s ease-in-out infinite; }
+.speak.playing .w2 { animation-delay: .2s; }
+@keyframes wave { 50% { opacity: .25; } }
+.face .speak { position: absolute; right: 14px; bottom: 12px; width: 44px; height: 44px; z-index: 1; }
+.face .speak svg { width: 22px; height: 22px; }
+.face.back .speak { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); color: var(--card-back-ink); }
+.face.back .speak.playing { background: var(--card-back-ink); color: var(--card-back); }
+td.acts .speak { margin-right: 4px; }
