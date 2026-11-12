@@ -46,7 +46,8 @@ export function conjugate(word: string, type: AdjType): [string, string, string,
 export function tableCard(card: Card, type: AdjType, id: string): Card {
   const word = dictionaryForm(card.jp);
   const [pa, pn, qa, qn] = conjugate(word, type);
-  const meaning = card.en.split(/[;\n]/)[0].replace(/\s*[（(][^）)]*[）)]/g, "").trim(); // "good-looking (conjugates like いい)" -> "good-looking"
+  // the first meaning, keeping English notes like "(weather)" but not Japanese ones like "(〜が)"
+  const meaning = card.en.split(/[;\n]/)[0].replace(/\s*[（(][^）)]*[\u3040-\u30ff\u4e00-\u9fff〜～~][^）)]*[）)]/g, "").trim();
   return {
     id, kind: "grammar",
     jp: word,
