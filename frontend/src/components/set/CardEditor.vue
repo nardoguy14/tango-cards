@@ -7,9 +7,10 @@ import type { Card, Kind } from "../../types";
 import Segmented from "../ui/Segmented.vue";
 
 const props = defineProps<{ card: Card }>();
-const emit = defineEmits<{ save: [changes: Pick<Card, "jp" | "reading" | "en" | "kind">]; cancel: []; remove: [] }>();
+const emit = defineEmits<{ save: [changes: Pick<Card, "jp" | "reading" | "en" | "kind" | "table">]; cancel: []; remove: [] }>();
 
-const form = reactive({ jp: props.card.jp, reading: props.card.reading, en: props.card.en, kind: kindOf(props.card) as Kind });
+const form = reactive({ jp: props.card.jp, reading: props.card.reading, en: props.card.en, kind: kindOf(props.card) as Kind,
+  table: props.card.table?.map(row => [...row]) }); // a copy, so Cancel leaves the card as it was
 const confirming = ref(false);
 const first = ref<HTMLInputElement>();
 const kinds = [{ value: "word" as Kind, label: "Word" }, { value: "grammar" as Kind, label: "Grammar" }];
@@ -18,7 +19,8 @@ const rows = (en: string) => (en.length > 120 ? 4 : en.length > 50 ? 3 : 2);
 onMounted(async () => { await nextTick(); first.value?.focus({ preventScroll: true }); });
 
 function save() {
-  const changes = { jp: form.jp.trim(), reading: form.reading.trim(), en: form.en.trim(), kind: form.kind };
+  const changes = { jp: form.jp.trim(), reading: form.reading.trim(), en: form.en.trim(), kind: form.kind,
+    ...(form.table ? { table: form.table.map(row => row.map(cell => cell.trim())) } : {}) };
   if (changes.jp || changes.en) emit("save", changes);
 }
 </script>
@@ -33,6 +35,14 @@ function save() {
       <label>Japanese<input ref="first" v-model="form.jp" class="jpin" maxlength="200"></label>
       <label>Reading<input v-model="form.reading" class="jpin" maxlength="200" placeholder="よみ"></label>
       <label class="wide">English<textarea v-model="form.en" maxlength="600" :rows="rows(form.en)"></textarea></label>
+    </div>
+    <div v-if="form.table" class="table-edit" :style="{ gridTemplateColumns: `auto repeat(${form.table[0].length - 1}, 1fr)` }">
+      <template v-for="(row, r) in form.table" :key="r">
+        <template v-for="(_, j) in row" :key="j">
+          <span v-if="!r || !j" class="eyebrow">{{ row[j] }}</span>
+          <input v-else v-model="form.table[r][j]" class="jpin" maxlength="80" :aria-label="`${row[0]} ${form.table[0][j]}`">
+        </template>
+      </template>
     </div>
     <div class="row">
       <button class="btn primary" type="submit" :disabled="!form.jp.trim() && !form.en.trim()">Save</button>

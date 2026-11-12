@@ -9,7 +9,7 @@ import CardEditor from "./CardEditor.vue";
 defineProps<{ cards: Card[]; kind: Kind; moved: string | null; editing: string | null }>();
 defineEmits<{
   move: [card: Card]; remove: [card: Card]; edit: [card: Card | null];
-  save: [card: Card, changes: Pick<Card, "jp" | "reading" | "en" | "kind">];
+  save: [card: Card, changes: Pick<Card, "jp" | "reading" | "en" | "kind" | "table">];
 }>();
 const other = { grammar: "words", word: "grammar" } as const;
 </script>
@@ -28,7 +28,9 @@ const other = { grammar: "words", word: "grammar" } as const;
           <tr v-else :class="{ moved: moved === c.id }" :style="{ '--i': i }">
             <td class="jp">{{ c.jp }}</td>
             <td class="rd">{{ c.reading }}</td>
-            <td>{{ c.en }}</td>
+            <td>{{ c.en }}<div v-if="c.table" class="mini"><table class="conj">
+              <tr v-for="(row, r) in c.table" :key="r"><component :is="r && j ? 'td' : 'th'" v-for="(cell, j) in row" :key="j" :lang="r && j ? 'ja' : undefined">{{ cell }}</component></tr>
+            </table></div></td>
             <td class="acts">
               <SpeakButton :card="c" />
               <button class="kind" :class="{ grammar: kind === 'grammar' }" :aria-label="`Move to ${other[kind]}`" :title="`Move to ${other[kind]}`"

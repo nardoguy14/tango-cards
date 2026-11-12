@@ -20,7 +20,8 @@ const flashcard = ref<InstanceType<typeof Flashcard>>();
 // Japanese-first, or when the card is flipped to its back (which always shows the Japanese).
 watch(() => [props.round.deals, props.round.flipped] as const, ([, flipped]) => {
   const c = card.value;
-  if (prefs.readAloud && c && (c.side === "jp-en" ? !flipped : flipped)) speakCard(c);
+  const jpFirst = !!c?.table || c?.side === "jp-en"; // a table card's front always shows the Japanese
+  if (prefs.readAloud && c && (jpFirst ? !flipped : flipped)) speakCard(c);
 }, { immediate: true });
 
 // The round stays until another starts; clearing it now would blank this screen mid-transition.

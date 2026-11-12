@@ -25,7 +25,7 @@ function remove(card: Card) {
   editing.value = null;
   persist(props.set);
 }
-function save(card: Card, changes: Pick<Card, "jp" | "reading" | "en" | "kind">) {
+function save(card: Card, changes: Pick<Card, "jp" | "reading" | "en" | "kind" | "table">) {
   const groupChanged = kindOf(card) !== changes.kind;
   Object.assign(card, changes);
   editing.value = null;

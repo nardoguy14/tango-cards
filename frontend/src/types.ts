@@ -14,6 +14,8 @@ export interface Card {
   en: string;
   kind?: Kind;
   image_id?: string;
+  /** A table on the back, row by row; the first row is the headings (conjugation tables). */
+  table?: string[][];
 }
 
 /** A card in a study round: which side it shows first, and (across sets) where it came from. */

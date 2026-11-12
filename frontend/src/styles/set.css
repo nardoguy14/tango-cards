@@ -127,3 +127,20 @@ tr.editing td { padding: 10px 0; }
 .screen:has(.editor) .fab { opacity: 0; visibility: hidden; }
 /* keep the line breaks typed into a card (English notes, example sentences); not in the buttons cell */
 .tablewrap td:not(.acts) { white-space: pre-line; }
+
+/* a table card in the card list; and the Conjugation tables section on the add screen */
+.tablewrap td .mini { white-space: normal; margin-top: 6px; }
+.tablewrap td .mini table.conj td { font-family: var(--f-jp); font-size: 13px; border-top: 1px solid var(--line); }
+.adjs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.adjs li { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 4px 10px; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: 10px; transition: opacity .2s; animation: rise .3s cubic-bezier(.2,.7,.3,1) both;
+  animation-delay: calc(min(var(--i, 0), 12) * 25ms); }
+.adjs li.off { opacity: .45; }
+.adj-pick { display: flex; align-items: center; gap: 8px; min-width: 6.5em; }
+.adj-pick .jp { font-family: var(--f-jp); font-size: 17px; }
+.adj-forms { font-family: var(--f-jp); font-size: 12px; color: var(--muted); grid-column: 1 / -1; }
+.table-edit { display: grid; gap: 6px 8px; align-items: center; }
+.table-edit input { width: 100%; }
+/* phones stack each card row into a block (see the 560px rule); the mini table inside stays a table */
+.tablewrap .mini tr { display: table-row; padding: 0; border: 0; }
+.tablewrap .mini th, .tablewrap .mini td { display: table-cell; grid-area: auto; margin: 0; }

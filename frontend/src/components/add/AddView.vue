@@ -7,6 +7,7 @@ import type { Card, CardSet } from "../../types";
 import PendingReview from "./PendingReview.vue";
 import PhotoReader from "./PhotoReader.vue";
 import TypeCard from "./TypeCard.vue";
+import AdjectiveTables from "./AdjectiveTables.vue";
 import CardEditor from "../set/CardEditor.vue";
 import SpeakButton from "../ui/SpeakButton.vue";
 
@@ -24,7 +25,7 @@ async function addCards(cards: Card[]) {
 
 // Fix a card you just added without leaving this screen. The list holds the same card objects
 // as the set, so the edit lands in the set too.
-async function saveEdit(card: Card, changes: Pick<Card, "jp" | "reading" | "en" | "kind">) {
+async function saveEdit(card: Card, changes: Pick<Card, "jp" | "reading" | "en" | "kind" | "table">) {
   Object.assign(card, changes);
   editing.value = null;
   await persist(props.set);
@@ -46,6 +47,7 @@ async function removeAdded(card: Card) {
     <PendingReview :set="set" @added="addCards" />
     <PhotoReader v-if="!draft.pending" :set="set" />
     <TypeCard @add="c => addCards([c])" />
+    <AdjectiveTables v-if="!set.example" :set="set" @add="addCards" />
 
     <section v-if="added.length" class="panel stack reveal">
       <div class="row"><h3>Added just now</h3><span class="spacer"></span><span class="mono muted">{{ added.length }}</span></div>

@@ -90,3 +90,17 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 td.acts .speak { margin-right: 4px; }
 /* the flashcard keeps a card's line breaks too */
 .face .big-jp, .face .big-en, .face .sub { white-space: pre-line; }
+
+/* conjugation table cards: the table on the card's back; tap a form to hear it */
+.face .table-word { font-family: var(--f-jp); font-weight: 700; font-size: 26px; margin-bottom: 10px; }
+.face .table-word span { font-weight: 500; font-size: 15px; opacity: .7; margin-left: 4px; }
+.face .table-en { font-size: 13px; opacity: .7; margin-top: 10px; }
+table.conj { border-collapse: collapse; width: auto; margin: 0 auto; }
+table.conj th, table.conj td { padding: 4px 8px; border: 0; text-align: left; font-size: 12px; }
+table.conj th { font-family: var(--f-mono); font-weight: 400; letter-spacing: .04em; text-transform: uppercase; opacity: .65; font-size: 10.5px; }
+.face table.conj td { font-family: var(--f-jp); font-size: clamp(14px, 4vw, 17px); border-top: 1px solid rgba(255,255,255,.18); }
+.face table.conj .say { border: 0; background: none; color: inherit; padding: 2px 4px; border-radius: 6px; font: inherit; }
+.face table.conj .say:hover, .face table.conj .say:active { background: rgba(255,255,255,.14); }
+.face table.conj { width: 100%; }
+.face table.conj th { color: inherit; opacity: .72; padding: 4px 6px; }
+.face table.conj td { font-size: clamp(13px, 3.7vw, 16px); padding: 5px 4px; word-break: keep-all; line-height: 1.35; }

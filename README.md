@@ -9,6 +9,12 @@ either side with a card you flip and swipe.
 - **Words and grammar.** Every card is either a *word* to memorize or a *grammar* rule
   (particles, conjugations, patterns). New cards are labeled automatically, and one tap moves
   a card to the other group.
+- **Conjugation tables.** On the add-cards screen, *Conjugation tables* finds a set's い- and
+  な-adjectives (ending in い, or marked (な)) and makes a table card for each: the front asks
+  for its forms, the back shows present and past, affirmative and negative (高いです, 高くないです,
+  高かったです, 高くなかったです; 静かです, 静かじゃないです, 静かでした, 静かじゃなかったです). いい and
+  かっこいい conjugate from よ. Untick anything that isn't an adjective, or switch い/な. Tap a form
+  on the card to hear it.
 - **Fix anything.** Cards read from a photo are editable before you add them. Afterwards, ✎ on
   any card in a set (or in the "Added just now" list) edits its Japanese, reading, English or
   type in place, and deletes it.
@@ -184,7 +190,7 @@ frontend/                   the page's source
     finder.ts               the Find cards conversation
     prefs.ts                choices remembered on this device
     api.ts, types.ts        the API and its shapes
-    lib/                    cards, progress, photo and speech helpers
+    lib/                    cards, progress, photos, speech, adjective conjugation
     composables/useSwipe.ts swiping a flashcard
     components/
       library/              home: Find cards, Practice across sets, your sets

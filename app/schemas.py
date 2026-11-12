@@ -1,6 +1,6 @@
 """Request bodies the API accepts. Responses are plain dicts from app.db."""
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field
 
@@ -12,6 +12,9 @@ class CardIn(BaseModel):
     en: str = Field("", max_length=600)
     kind: Literal["word", "grammar"] = "word"
     image_id: str | None = Field(None, max_length=64)
+    # A table on the card's back, row by row, the first row being the headings. Conjugation
+    # tables use it: ["", "affirmative", "negative"], ["present", …, …], ["past", …, …].
+    table: list[list[Annotated[str, Field(max_length=80)]]] | None = Field(None, max_length=8)
 
 
 class SetIn(BaseModel):
