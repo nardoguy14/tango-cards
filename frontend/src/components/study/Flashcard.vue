@@ -15,7 +15,7 @@ defineExpose({ throwCard });
 </script>
 
 <template>
-  <div class="scene" :class="{ tall: card.en.length > 140 || !!card.table }">
+  <div class="scene" :class="{ tall: card.en.length > 140 || !!card.table, huge: (card.table?.length ?? 0) > 4 }">
     <div ref="swipe" class="swipe">
       <span class="stamp good" aria-hidden="true">Got it</span>
       <span class="stamp again" aria-hidden="true">Again</span>

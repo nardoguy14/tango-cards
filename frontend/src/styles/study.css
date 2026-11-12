@@ -104,3 +104,18 @@ table.conj th { font-family: var(--f-mono); font-weight: 400; letter-spacing: .0
 .face table.conj { width: 100%; }
 .face table.conj th { color: inherit; opacity: .72; padding: 4px 6px; }
 .face table.conj td { font-size: clamp(13px, 3.7vw, 16px); padding: 5px 4px; word-break: keep-all; line-height: 1.35; }
+/* a rule card with a big table (6+ rows) gets a taller card so it all fits without scrolling */
+.scene.huge { aspect-ratio: 5 / 7.4; max-height: calc(100dvh - 300px); }
+.scene.huge .face { padding: 22px 16px 54px; justify-content: flex-start; }
+.scene.huge .face.front { justify-content: center; }
+.scene.huge .face .table-word { font-size: 20px; margin: 18px 0 6px; }
+.scene.huge table.conj td { padding: 3px 3px; font-size: clamp(12.5px, 3.5vw, 15px); }
+.scene.huge table.conj tbody th { font-size: 10px; line-height: 1.25; }
+.scene.huge .face .table-en { font-size: 12px; margin-top: 8px; }
+.face .table-en { white-space: pre-line; }
+.scene.huge { aspect-ratio: 5 / 6.4; }
+@media (max-height: 720px) {
+  .scene.huge .face { padding-top: 16px; padding-bottom: 50px; }
+  .scene.huge .face .table-word { margin: 14px 0 4px; }
+  .scene.huge table.conj td { padding: 2px 3px; }
+}
